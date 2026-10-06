@@ -50,6 +50,24 @@ C es un lenguaje de programación compilado que permite desarrollar programas ef
 
 Las versiones de Docker, GNU Octave, Python 3 y GCC deben obtenerse directamente del contenedor o entorno de trabajo utilizado en el curso. No deben suponerse ni inventarse, ya que pueden variar según la imagen de Docker y la configuración del sistema.
 
+### Ejercicio 3. Capturas del entorno corriendo
+
+1. Comando docker compose up -d --build terminado:
+![Docker Compose Up](img/captura1.png)
+
+2. Estado del contenedor con docker compose ps:
+![Docker Compose Ps](img/captura2.png)
+
+3. Versiones de Octave, Python y GCC instaladas:
+![Versiones de herramientas](img/captura3.png)
+
+4. Vista del contenedor en Docker Desktop:
+![Docker Desktop](img/captura4.png)
+
+5. Programas ejecutándose dentro del contenedor:
+![Programas ejecutándose](img/captura5.png)
+
+
 ## Referencias bibliográficas
 
 Chapra, S. C., & Canale, R. P. (2015). *Numerical methods for engineers* (7th ed.). McGraw-Hill Education.
