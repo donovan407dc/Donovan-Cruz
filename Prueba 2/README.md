@@ -1,75 +1,187 @@
-# Ejercicio 2. El README: Métodos numéricos y herramientas de trabajo
+# Práctica 2 · Raíces de ecuaciones no lineales
 
-## 1. ¿Qué son los métodos numéricos?
+**UEA 1151039 · Métodos Numéricos en Ingeniería · Trimestre 26-O · UAM Azcapotzalco**  
+**Profesor:** M. en C. Gabriel Hurtado Avilés
 
-Los métodos numéricos son procedimientos matemáticos que permiten obtener soluciones aproximadas a problemas que, en ocasiones, no pueden resolverse fácilmente mediante métodos analíticos. Estos métodos utilizan operaciones aritméticas y algoritmos que pueden ejecutarse mediante una computadora para aproximarse a una solución con un nivel de precisión determinado. A diferencia de una solución analítica, que busca una expresión matemática exacta, un método numérico generalmente produce valores aproximados que dependen del algoritmo, los datos iniciales y la precisión de los cálculos (Chapra & Canale, 2015).
+| Dato | Información |
+|---|---|
+| Equipo | 1 |
+| Integrantes (nombre, matrícula y licenciatura) | Donovan David Cruz Arreola, 2253078038, Ingeniería Eléctrica |
+| Ecuación asignada | Número 11: Generador síncrono de polos salientes |
+| Fecha | 10/10/2026 |
 
-El resultado aproximado es importante porque permite resolver problemas complejos en un tiempo razonable. Sin embargo, es necesario considerar los errores de redondeo, los errores de truncamiento y la convergencia del método. Por ello, los métodos numéricos son fundamentales en la computación científica, ya que permiten modelar fenómenos, analizar datos y resolver ecuaciones que aparecen en distintas áreas de la ingeniería (Burden et al., 2016).
+---
 
-## 2. Aplicación de los métodos numéricos en Ingeniería Eléctrica
+## 1. Octave y Python con nuestra ecuación
 
-En Ingeniería Eléctrica, los métodos numéricos se utilizan para resolver problemas relacionados con circuitos eléctricos, sistemas de potencia, máquinas eléctricas y análisis de señales. Estas herramientas permiten realizar cálculos y simulaciones cuando los sistemas presentan múltiples variables o ecuaciones que son difíciles de resolver mediante métodos analíticos. Los métodos numéricos permiten obtener soluciones aproximadas y analizar el comportamiento de los sistemas eléctricos con ayuda de programas computacionales (Chapra & Canale, 2015).
+Se implementó la ecuación asignada en Octave y Python utilizando los cinco métodos numéricos de la unidad II. Se conservaron los mismos parámetros, el intervalo inicial, la aproximación inicial y la tolerancia para facilitar la comparación de resultados.
 
-Un primer ejemplo es el **análisis de circuitos eléctricos** que contienen varias resistencias, fuentes de voltaje y componentes. Mediante sistemas de ecuaciones lineales y métodos como la eliminación de Gauss, es posible calcular los voltajes en los nodos y las corrientes que circulan por las ramas del circuito. En circuitos más complejos, resolver las ecuaciones manualmente puede resultar laborioso, por lo que se utilizan herramientas computacionales para automatizar los cálculos y reducir errores.
+Las capturas siguientes corresponden a las ejecuciones de los programas y deberán agregarse después de ejecutarlos.
 
-Un segundo ejemplo es el **análisis de sistemas eléctricos de potencia**, donde se requiere calcular los voltajes y los ángulos de fase en diferentes nodos de una red eléctrica. Para resolver el problema del flujo de potencia se utilizan métodos iterativos como Newton-Raphson, debido a que las ecuaciones que describen el sistema son no lineales. Estos cálculos permiten estudiar las condiciones de operación de una red, identificar posibles variaciones de voltaje y analizar cómo se distribuye la potencia eléctrica entre sus componentes (Burden et al., 2016).
+![Octave](img/01-octave.png)
 
-## 3. Herramientas utilizadas para trabajar con métodos numéricos
+![Python](img/02-python.png)
 
-Para trabajar con métodos numéricos se utilizan diferentes lenguajes de programación, entornos de cálculo y bibliotecas científicas. Los lenguajes compilados, como C y C++, permiten desarrollar programas que se traducen a código ejecutable mediante un compilador. Fortran también se utiliza en computación científica por su aplicación en cálculos numéricos. Estas herramientas permiten implementar algoritmos y controlar directamente los tipos de datos y las operaciones.
+## 2. Las cinco líneas que completamos en `raices.c`
 
-Los lenguajes interpretados y los entornos de cálculo facilitan la experimentación y el análisis de resultados. Python, mediante bibliotecas como NumPy y SciPy, permite realizar operaciones con arreglos, resolver problemas matemáticos y aplicar métodos numéricos; Matplotlib facilita la representación gráfica de los resultados. MATLAB y GNU Octave permiten trabajar con matrices, funciones y visualizaciones. Por otra parte, el álgebra simbólica permite manipular expresiones matemáticas, mientras que las bibliotecas BLAS y LAPACK proporcionan operaciones numéricas eficientes, especialmente para cálculos con matrices y sistemas de ecuaciones (Chapra & Canale, 2015; Burden et al., 2016).
+Las cinco líneas que se completaron corresponden al cálculo del error aproximado, la fórmula de falsa posición, la iteración de punto fijo, la fórmula de Newton-Raphson y la secante modificada.
 
-## 4. Herramientas utilizadas en el curso
+```c
+/* COMPLETAR 1: error aproximado */
+return fabs((nuevo - anterior) / nuevo) * 100.0;
 
-### Docker y máquinas virtuales
+/* COMPLETAR 2: falsa posición */
+x = (a * f(b) - b * f(a)) / (f(b) - f(a));
 
-Docker es una plataforma que permite ejecutar aplicaciones dentro de contenedores, los cuales incluyen la aplicación y las dependencias necesarias para funcionar. A diferencia de una máquina virtual, un contenedor comparte el núcleo del sistema operativo del equipo anfitrión, mientras que una máquina virtual ejecuta un sistema operativo invitado sobre una capa de virtualización. Por esta razón, los contenedores suelen requerir menos recursos que una máquina virtual completa.
+/* COMPLETAR 3: punto fijo */
+x_nuevo = g(x);
 
-### Dockerfile, compose.yaml y comandos
+/* COMPLETAR 4: Newton-Raphson */
+x_nuevo = x - f(x) / fp(x);
 
-El Dockerfile contiene las instrucciones para construir una imagen de Docker, como la imagen base, la instalación de dependencias y la configuración del entorno. El archivo compose.yaml permite definir y administrar servicios, redes y volúmenes de una aplicación mediante Docker Compose.
+/* COMPLETAR 5: secante modificada */
+x_nuevo = x - f(x) * delta / (f(x + delta) - f(x));
+```
 
-Los comandos utilizados en el curso permiten administrar los contenedores. `docker compose up -d` crea e inicia los servicios en segundo plano; `docker exec` ejecuta un comando dentro de un contenedor en funcionamiento; `docker stop` detiene un contenedor sin eliminarlo; `docker compose down` detiene y elimina los contenedores y redes creados por Compose; `docker ps` muestra los contenedores en ejecución, mientras que `docker ps -a` incluye también los detenidos. Finalmente, `docker logs` permite consultar los registros de un contenedor.
+![Compilación](img/03-c-compilacion.png)
 
-Detener y eliminar no son lo mismo: al utilizar `docker stop`, el contenedor permanece disponible para volver a iniciarse; al eliminarlo, se retira el contenedor como objeto de Docker. Los volúmenes y los datos persistentes requieren atención especial, ya que no siempre se eliminan junto con los contenedores.
+![Ejecución en C](img/04-c-ejecucion.png)
 
-### GNU Octave
+**¿Coinciden las tablas de C con las de Octave y Python?**
 
-GNU Octave es un entorno de cálculo numérico compatible con gran parte de la sintaxis de MATLAB. Permite trabajar con matrices, resolver ecuaciones, implementar algoritmos numéricos y representar resultados mediante gráficas. En el curso se utiliza para realizar cálculos científicos y comprobar resultados matemáticos.
+Las tablas deben coincidir en sus resultados numéricos al utilizar las mismas fórmulas, parámetros y criterios de paro. Puede haber diferencias muy pequeñas en los últimos decimales debido al redondeo y a las operaciones de punto flotante. La coincidencia debe comprobarse con las salidas reales de los tres programas.
 
-### Python 3
+## 3. Las gráficas de Python
 
-Python 3 es un lenguaje de programación que permite desarrollar algoritmos de manera clara y utilizar bibliotecas especializadas para cálculos científicos, procesamiento de datos y visualización. En el curso se emplea para implementar programas y resolver problemas matemáticos. Su ejecución depende de la versión de Python y de las bibliotecas instaladas en el entorno de trabajo.
+La gráfica de la función permite observar dónde cruza el eje horizontal la ecuación. La gráfica de convergencia permite comparar cómo cambia la aproximación de la raíz en cada iteración de los cinco métodos.
 
-### C y GCC
+![Función](img/funcion.png)
 
-C es un lenguaje de programación compilado que permite desarrollar programas eficientes y controlar aspectos como los tipos de datos y la memoria. GCC es una colección de compiladores que incluye el compilador de C. Para ejecutar un programa, primero se compila el archivo fuente y después se ejecuta el archivo generado. Por ejemplo, `gcc suma.c -o suma` compila el archivo `suma.c` y genera un ejecutable llamado `suma`. En Linux, este se ejecuta con `./suma`.
+![Convergencia](img/convergencia.png)
 
-### Versiones del entorno
+## 4. Nuestra ecuación
 
-Las versiones de Docker, GNU Octave, Python 3 y GCC deben obtenerse directamente del contenedor o entorno de trabajo utilizado en el curso. No deben suponerse ni inventarse, ya que pueden variar según la imagen de Docker y la configuración del sistema.
+| Elemento | Expresión o valor |
+|---|---|
+| \(f(x)\) | \(1.5\sin(x)+\frac{1}{3}\sin(2x)-1.2\) |
+| \(f'(x)\) | \(1.5\cos(x)+\frac{2}{3}\cos(2x)\) |
+| \(g(x)\) | \(x-\frac{f(x)}{2}\) |
+| Intervalo \([a,b]\) | \([0,1.5]\) rad |
+| \(x_0\) y \(\delta\) | \(x_0=0.5\) rad, \(\delta=0.01\) |
+| Tolerancia | \(\varepsilon_a\leq 0.5\%\) |
+| Máximo de iteraciones | 50 |
 
-### Ejercicio 3. Capturas del entorno corriendo
+La ecuación corresponde al ángulo de carga de un generador síncrono de polos salientes. Se utilizaron los parámetros \(E=1.5\), \(V=1\), \(X_d=1\), \(X_q=0.6\) y \(P=1.2\), expresados en por unidad.
 
-1. Comando docker compose up -d --build terminado:
-![Docker Compose Up](img/captura1.png)
+![C con nuestra ecuación](img/05-c-ecuacion.png)
 
-2. Estado del contenedor con docker compose ps:
-![Docker Compose Ps](img/captura2.png)
+![Python con nuestra ecuación](img/06-python-ecuacion.png)
 
-3. Versiones de Octave, Python y GCC instaladas:
-![Versiones de herramientas](img/captura3.png)
+### Tablas (salida de C)
 
-4. Vista del contenedor en Docker Desktop:
-![Docker Desktop](img/captura4.png)
+Los siguientes valores corresponden a las iteraciones calculadas con las fórmulas implementadas. Se muestran redondeados a seis decimales para facilitar su presentación.
 
-5. Programas ejecutándose dentro del contenedor:
-![Programas ejecutándose](img/captura5.png)
+**Bisección**
 
+| k | a | b | x | f(x) | εa (%) |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 0.000000 | 1.500000 | 0.750000 | 0.154956 | — |
+| 2 | 0.000000 | 0.750000 | 0.375000 | -0.423378 | 100.0000 |
+| 3 | 0.375000 | 0.750000 | 0.562500 | -0.099290 | 33.3333 |
+| 4 | 0.562500 | 0.750000 | 0.656250 | 0.037501 | 14.2857 |
+| 5 | 0.562500 | 0.656250 | 0.609375 | -0.028578 | 7.6923 |
+| 6 | 0.609375 | 0.656250 | 0.632813 | 0.005054 | 3.7037 |
+| 7 | 0.609375 | 0.632813 | 0.621094 | -0.011615 | 1.8868 |
+| 8 | 0.621094 | 0.632813 | 0.626953 | -0.003244 | 0.9346 |
+| 9 | 0.626953 | 0.632813 | 0.629883 | 0.000915 | 0.4651 |
 
-## Referencias bibliográficas
+**Falsa posición**
 
-Chapra, S. C., & Canale, R. P. (2015). *Numerical methods for engineers* (7th ed.). McGraw-Hill Education.
+| k | a | b | x | f(x) | εa (%) |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 0.000000 | 1.500000 | 1.166345 | 0.420154 | — |
+| 2 | 0.000000 | 1.166345 | 0.863877 | 0.269785 | 35.0129 |
+| 3 | 0.000000 | 0.863877 | 0.705309 | 0.101470 | 22.4821 |
+| 4 | 0.000000 | 0.705309 | 0.650319 | 0.029403 | 8.4558 |
+| 5 | 0.000000 | 0.650319 | 0.634765 | 0.007804 | 2.4503 |
+| 6 | 0.000000 | 0.634765 | 0.630664 | 0.002021 | 0.6503 |
+| 7 | 0.000000 | 0.630664 | 0.629604 | 0.000520 | 0.1684 |
 
-Burden, R. L., Faires, J. D., & Burden, A. M. (2016). *Numerical analysis* (10th ed.). Cengage Learning.
+**Punto fijo**
+
+| k | x | f(x) | εa (%) |
+|---:|---:|---:|---:|
+| 0 | 0.500000 | -0.200371 | — |
+| 1 | 0.600186 | -0.042082 | 16.6924 |
+| 2 | 0.621227 | -0.011424 | 3.3870 |
+| 3 | 0.626939 | -0.003264 | 0.9111 |
+| 4 | 0.628571 | -0.000945 | 0.2596 |
+
+**Newton-Raphson**
+
+| k | x | f(x) | εa (%) |
+|---:|---:|---:|---:|
+| 0 | 0.500000 | -0.200371 | — |
+| 1 | 0.619512 | -0.013887 | 19.2914 |
+| 2 | 0.629167 | -0.000100 | 1.5345 |
+| 3 | 0.629237 | -0.000000 | 0.0112 |
+
+**Secante modificada**
+
+| k | x | f(x) | εa (%) |
+|---:|---:|---:|---:|
+| 0 | 0.500000 | -0.200371 | — |
+| 1 | 0.620175 | -0.012934 | 19.3776 |
+| 2 | 0.629244 | 0.000009 | 1.4411 |
+| 3 | 0.629237 | -0.000000 | 0.0010 |
+
+### Resumen
+
+Para comparar los métodos se utiliza como referencia numérica de alta precisión una raíz aproximada de \(0.6292372743\) rad. El error verdadero se calcula mediante:
+
+\[
+E_v=\left|\frac{x_{\text{ref}}-x_{\text{aprox}}}{x_{\text{ref}}}\right|\times100
+\]
+
+| Método | Raíz aproximada | Iteraciones | εa (%) | f(raíz) | Error verdadero (%) |
+|---|---:|---:|---:|---:|---:|
+| Bisección | 0.629883 | 9 | 0.4651 | 9.1464e-04 | 0.102591 |
+| Falsa posición | 0.629604 | 7 | 0.1684 | 5.1983e-04 | 0.058294 |
+| Punto fijo | 0.628571 | 4 | 0.2596 | -9.4529e-04 | 0.105923 |
+| Newton-Raphson | 0.629237 | 3 | 0.0112 | -5.3156e-09 | 0.000000596 |
+| Secante modificada | 0.629237 | 3 | 0.0010 | -6.9597e-08 | 0.000007803 |
+
+**Raíz de referencia (SciPy):** \(x\approx0.6292372743\) rad. Este valor debe confirmarse ejecutando un método de búsqueda de raíces de SciPy para registrar la referencia utilizada.
+
+### Análisis
+
+El método de Newton-Raphson y el de secante modificada necesitaron menos iteraciones, con tres cada uno, para alcanzar la tolerancia establecida. Ambos métodos utilizan información de la pendiente de la función, lo que permite acercarse rápidamente a la raíz cuando las aproximaciones iniciales son adecuadas.
+
+La falsa posición necesitó siete iteraciones, mientras que bisección necesitó nueve. Esto se debe a que bisección divide el intervalo a la mitad en cada paso, mientras que falsa posición calcula el punto de corte de una recta que une los extremos del intervalo.
+
+El método de punto fijo necesitó cuatro iteraciones para cumplir el criterio de paro. Su velocidad de convergencia depende del despeje elegido y de las propiedades de la función \(g(x)\).
+
+Los cinco métodos no obtienen exactamente el mismo número porque utilizan procedimientos diferentes y se detienen cuando el error relativo aproximado es menor o igual a \(0.5\%\). Además, cada método puede alcanzar una aproximación distinta al momento de cumplir esa condición. En este caso, los cinco métodos alcanzaron la tolerancia dentro del límite de 50 iteraciones.
+
+## 5. Cada integrante en su computadora
+
+Cada integrante debe ejecutar `raices.c` con la ecuación del equipo en su propia computadora y subir la captura mediante un commit propio, siguiendo las indicaciones de `COMO_CORRER.md`, sección 7.
+
+| Integrante | Usuario de GitHub | Captura |
+|---|---|---|
+| Donovan David Cruz Arreola | Pendiente de confirmar | `img/07-Donovan-Cruz.png` |
+
+![Integrante 1](img/07-Donovan-Cruz.png)
+
+## Uso de inteligencia artificial
+
+Se utilizó ChatGPT como apoyo para revisar y corregir la estructura de los programas en C y Python, completar las fórmulas de los métodos numéricos y organizar las tablas y el análisis para el README. Las ejecuciones, las capturas y la comparación final de los resultados deben verificarse con los programas utilizados en la práctica.
+
+## Referencias
+
+1. Chapra, S. C. y Canale, R. P. *Métodos numéricos para ingenieros*. McGraw-Hill.
+2. Documentación oficial de Python. https://docs.python.org/3/
+3. Documentación oficial de GNU Octave. https://docs.octave.org/
+4. Documentación de SciPy, módulo `scipy.optimize`. https://docs.scipy.org/doc/scipy/reference/optimize.html
+5. Material de clase y láminas de la unidad II de Métodos Numéricos en Ingeniería, UAM Azcapotzalco.
+
